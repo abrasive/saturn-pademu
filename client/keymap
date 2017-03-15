@@ -1,0 +1,75 @@
+0e  `
+16  1
+1e  2
+26  3
+25  4
+2e  5
+36  6
+3d  7
+3e  8
+46  9
+45  0
+4e  -
+55  =
+66  Backspace
+0d  Tab
+15  Q
+1d  W
+24  E
+2d  R
+2c  T
+35  Y
+3c  U
+43  I
+44  O
+4d  P
+54  [
+5b  ]
+5c  \
+14  CapsLock
+1c  A
+1b  S
+23  D
+2b  F
+34  G
+33  H
+3b  J
+42  K
+4b  L
+4c  ;
+52  '
+5a  Return
+12  Left Shift
+1a  Z
+22  X
+21  C
+2a  V
+32  B
+31  N
+3a  M
+41  ,
+49  .
+4a  /
+59  Right Shift
+11  Left Ctrl
+19  Left Alt
+29  Space
+39  Right Alt
+#58  Right Ctrl
+76  Escape
+5f  ScrollLock
+85  Delete
+86  Left
+88  End
+87  Home
+89  Up
+8a  Down
+8b  PageUp
+8c  PageDown
+8d  Right
+# not correctly mapped currently
+6a  Yen
+0e  Hankaku
+13  katakana/hiragana
+# cheeky romaji hack
+58  Right GUI
