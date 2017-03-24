@@ -28,4 +28,5 @@ keymap.cpp: keymap genkeymap.py
 	python genkeymap.py > keymap.cpp
 
 clean:
-	rm -f client
+	rm -f client keymap.cpp *.o
+	rm -rf client.dSYM
