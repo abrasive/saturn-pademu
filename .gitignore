@@ -1,0 +1,6 @@
+*.o
+
+# client
+/client/client
+/client/client.dSYM
+/client/keymap.cpp
