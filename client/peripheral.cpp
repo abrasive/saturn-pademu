@@ -13,8 +13,8 @@
       controls.push_back(new DigitalControl("Up"   , report, 1, 4, true)); \
       controls.push_back(new DigitalControl("Start", report, 1, 3, true)); \
       controls.push_back(new DigitalControl("A"    , report, 1, 2, true)); \
-      controls.push_back(new DigitalControl("B"    , report, 1, 1, true)); \
-      controls.push_back(new DigitalControl("C"    , report, 1, 0, true)); \
+      controls.push_back(new DigitalControl("B"    , report, 1, 0, true)); \
+      controls.push_back(new DigitalControl("C"    , report, 1, 1, true)); \
       controls.push_back(new DigitalControl("RT"   , report, 2, 7, true)); \
       controls.push_back(new DigitalControl("X"    , report, 2, 6, true)); \
       controls.push_back(new DigitalControl("Y"    , report, 2, 5, true)); \

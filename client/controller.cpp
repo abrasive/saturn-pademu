@@ -11,8 +11,8 @@
       DigitalControl("Up"   , report, 1, 4, true), \
       DigitalControl("Start", report, 1, 3, true), \
       DigitalControl("A"    , report, 1, 2, true), \
-      DigitalControl("B"    , report, 1, 1, true), \
-      DigitalControl("C"    , report, 1, 0, true), \
+      DigitalControl("B"    , report, 1, 0, true), \
+      DigitalControl("C"    , report, 1, 1, true), \
       DigitalControl("RT"   , report, 2, 7, true), \
       DigitalControl("X"    , report, 2, 6, true), \
       DigitalControl("Y"    , report, 2, 5, true), \
