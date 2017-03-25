@@ -52,3 +52,31 @@ bool InputKeyboard::add_mapping(const char *inspec, Control *ctl) {
 
     return true;
 }
+
+std::multimap<SDL_GameControllerButton, DigitalControl*> InputGamepad::mapping = {};
+
+void InputGamepad::handle_event(SDL_Event *event) {
+    if (event->type != SDL_CONTROLLERBUTTONDOWN &&
+        event->type != SDL_CONTROLLERBUTTONUP)
+        return;
+
+    SDL_ControllerButtonEvent button_event = event->cbutton;
+
+    bool pressed = button_event.state == SDL_PRESSED;
+    SDL_GameControllerButton button = (SDL_GameControllerButton)button_event.button;
+
+    if (pressed)
+        std::cerr << "Button: " << SDL_GameControllerGetStringForButton(button) << std::endl;
+
+    auto its = mapping.equal_range(button);
+    for (auto it = its.first; it != its.second; ++it)
+        it->second->set(pressed);
+}
+
+bool InputGamepad::add_mapping(SDL_GameControllerButton inspec, Control *ctl) {
+    mapping.insert(std::make_pair(inspec, static_cast<DigitalControl*>(ctl)));
+
+    std::cerr << "mapped key " << SDL_GameControllerGetStringForButton(inspec) << std::endl;
+
+    return true;
+}
