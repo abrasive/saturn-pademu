@@ -18,6 +18,8 @@ else
 LDFLAGS=$(LIBS)
 endif
 
+.PHONY: keymap
+
 client: client.cpp peripheral.cpp binding.cpp peripheral.h binding.h keymap.cpp hid.o usb.cpp
 	g++ $(CXXFLAGS) usb.cpp peripheral.cpp binding.cpp client.cpp hid.o -o client $(LDFLAGS)
 
