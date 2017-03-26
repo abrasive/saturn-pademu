@@ -95,7 +95,8 @@ void InputGamepad::handle_axis_event(SDL_ControllerAxisEvent event) {
         if (id != event.which)
             return;
 
-        ctl->set(event.value);
+        Uint16 value = event.value + 32768;
+        ctl->set(value / 256);
     }
 }
 
