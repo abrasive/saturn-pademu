@@ -53,30 +53,50 @@ bool InputKeyboard::add_mapping(const char *inspec, Control *ctl) {
     return true;
 }
 
-std::multimap<SDL_GameControllerButton, DigitalControl*> InputGamepad::mapping = {};
+std::multimap<SDL_GameControllerButton, Control*> InputGamepad::mapping = {};
+std::multimap<SDL_GameControllerAxis, Control*> InputGamepad::axismapping = {};
 
 void InputGamepad::handle_event(SDL_Event *event) {
-    if (event->type != SDL_CONTROLLERBUTTONDOWN &&
-        event->type != SDL_CONTROLLERBUTTONUP)
-        return;
+    if (event->type == SDL_CONTROLLERBUTTONDOWN ||
+        event->type == SDL_CONTROLLERBUTTONUP) {
+        handle_button_event(event->cbutton);
+    } else if (event->type == SDL_CONTROLLERAXISMOTION) {
+        handle_axis_event(event->caxis);
+    }
+}
 
-    SDL_ControllerButtonEvent button_event = event->cbutton;
-
-    bool pressed = button_event.state == SDL_PRESSED;
-    SDL_GameControllerButton button = (SDL_GameControllerButton)button_event.button;
+void InputGamepad::handle_button_event(SDL_ControllerButtonEvent event) {
+    bool pressed = event.state == SDL_PRESSED;
+    SDL_GameControllerButton button = (SDL_GameControllerButton)event.button;
 
     if (pressed)
         std::cerr << "Button: " << SDL_GameControllerGetStringForButton(button) << std::endl;
 
     auto its = mapping.equal_range(button);
     for (auto it = its.first; it != its.second; ++it)
-        it->second->set(pressed);
+        static_cast<DigitalControl*>(it->second)->set(pressed);
+}
+
+void InputGamepad::handle_axis_event(SDL_ControllerAxisEvent event) {
+    SDL_GameControllerAxis axis = (SDL_GameControllerAxis)event.axis;
+
+    auto its = axismapping.equal_range(axis);
+    for (auto it = its.first; it != its.second; ++it)
+        static_cast<AnalogControl*>(it->second)->set(event.value);
 }
 
 bool InputGamepad::add_mapping(SDL_GameControllerButton inspec, Control *ctl) {
-    mapping.insert(std::make_pair(inspec, static_cast<DigitalControl*>(ctl)));
+    mapping.insert(std::make_pair(inspec, ctl));
 
-    std::cerr << "mapped key " << SDL_GameControllerGetStringForButton(inspec) << std::endl;
+    std::cerr << "mapped key " << SDL_GameControllerGetStringForButton((SDL_GameControllerButton)inspec) << std::endl;
+
+    return true;
+}
+
+bool InputGamepad::add_axis_mapping(SDL_GameControllerAxis inspec, Control *ctl) {
+    axismapping.insert(std::make_pair(inspec, ctl));
+
+    std::cerr << "mapped axis " << SDL_GameControllerGetStringForAxis((SDL_GameControllerAxis)inspec) << std::endl;
 
     return true;
 }
