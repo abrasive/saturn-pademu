@@ -75,6 +75,25 @@ AnalogPad::AnalogPad()
     report[5] = report[6] = 0x00; // inactive
 }
 
+TwinStick::TwinStick()
+    : Peripheral(0, 2)
+{
+    controls.push_back(new DigitalControl("Lright"  , report, 1, 7, true));
+    controls.push_back(new DigitalControl("Lleft"   , report, 1, 6, true));
+    controls.push_back(new DigitalControl("Ldown"   , report, 1, 5, true));
+    controls.push_back(new DigitalControl("Lup"     , report, 1, 4, true));
+    controls.push_back(new DigitalControl("Lbutton" , report, 2, 7, true));
+    controls.push_back(new DigitalControl("Ltrigger", report, 2, 3, true));
+    controls.push_back(new DigitalControl("Start"   , report, 1, 3, true));
+    controls.push_back(new DigitalControl("Rright"  , report, 2, 4, true));
+    controls.push_back(new DigitalControl("Rleft"   , report, 2, 6, true));
+    controls.push_back(new DigitalControl("Rdown"   , report, 1, 0, true));
+    controls.push_back(new DigitalControl("Rup"     , report, 2, 5, true));
+    controls.push_back(new DigitalControl("Rbutton" , report, 1, 1, true));
+    controls.push_back(new DigitalControl("Rtrigger", report, 1, 2, true));
+    report[1] = report[2] = 0xff;
+}
+
 // saturn_scancodes: map from Saturn scancodes to SDL keynames
 #include "keymap.cpp"
 

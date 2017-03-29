@@ -128,6 +128,12 @@ public:
     AnalogPad();
 };
 
+// Virtual On Twin Stick, not the Mission Stick in dual mode
+class TwinStick : public Peripheral {
+public:
+    TwinStick();
+};
+
 class Keyboard : public Peripheral {
     uint8_t scancode;
     uint8_t pending;
