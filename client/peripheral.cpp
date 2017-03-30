@@ -62,15 +62,17 @@ DigitalPad::DigitalPad()
 }
 
 AnalogPad::AnalogPad()
-    : Peripheral(1, 5)
+    : Peripheral(1, 6)
 {
     COMMON_PAD_CONTROLS;
-    controls.push_back(new AnalogControl("Xaxis", report, 3));
-    controls.push_back(new AnalogControl("Yaxis", report, 4));
-    controls.push_back(new AnalogControl("Zaxis", report, 5));
+    controls.push_back(new AnalogControl("Xaxis", false, report, 3));
+    controls.push_back(new AnalogControl("Yaxis", false, report, 4));
+    controls.push_back(new AnalogControl("Ltrig", true, report, 5));
+    controls.push_back(new AnalogControl("Rtrig", true, report, 6));
 
     report[1] = report[2] = 0xff;
-    report[3] = report[4] = report[5] = 0x80;   // midpoint
+    report[3] = report[4] = 0x80; // midpoint
+    report[5] = report[6] = 0x00; // inactive
 }
 
 // saturn_scancodes: map from Saturn scancodes to SDL keynames

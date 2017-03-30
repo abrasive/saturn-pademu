@@ -50,15 +50,25 @@ public:
 
 class AnalogControl : public Control {
     uint8_t *target;
+    bool onesided;
 
 public:
-    AnalogControl(const char *name, uint8_t *report, int byte)
+    AnalogControl(const char *name, bool onesided, uint8_t *report, int byte)
         : Control(name, Analog),
+          onesided(onesided),
           target(&report[byte])
     {}
 
-    void set(uint8_t value) {
-        *target = value;
+    void set(int16_t value) {
+        uint8_t scaled;
+        if (onesided) {
+            if (value < 0)
+                value = 0;
+            scaled = value / 128;
+        } else {
+            scaled = ((int)value + 32768) / 256;
+        }
+        *target = scaled;
     }
 };
 
