@@ -13,6 +13,7 @@ bool Input::add_mapping(const char *inspec, Control *ctl) {
 
 void Input::handle_event(SDL_Event *event) {
     InputKeyboard::handle_event(event);
+    InputGamepad::handle_event(event);
 }
 
 std::multimap<SDL_Keycode, DigitalControl*> InputKeyboard::mapping = {};
