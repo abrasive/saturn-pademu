@@ -67,8 +67,8 @@ AnalogPad::AnalogPad()
     COMMON_PAD_CONTROLS;
     controls.push_back(new AnalogControl("Xaxis", false, report, 3));
     controls.push_back(new AnalogControl("Yaxis", false, report, 4));
-    controls.push_back(new AnalogControl("Ltrig", true, report, 5));
-    controls.push_back(new AnalogControl("Rtrig", true, report, 6));
+    controls.push_back(new AnalogControl("Laxis", true, report, 5));
+    controls.push_back(new AnalogControl("Raxis", true, report, 6));
 
     report[1] = report[2] = 0xff;
     report[3] = report[4] = 0x80; // midpoint
