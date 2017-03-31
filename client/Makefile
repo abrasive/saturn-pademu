@@ -24,6 +24,9 @@ endif
 client: client.cpp peripheral.cpp binding.cpp peripheral.h binding.h keymap.cpp hid.o usb.cpp
 	g++ $(CXXFLAGS) usb.cpp peripheral.cpp binding.cpp client.cpp hid.o -o client $(LDFLAGS)
 
+twinsticks: twinsticks.cpp peripheral.cpp binding.cpp peripheral.h binding.h keymap.cpp hid.o usb.cpp
+	g++ $(CXXFLAGS) usb.cpp peripheral.cpp binding.cpp twinsticks.cpp hid.o -o twinsticks $(LDFLAGS)
+
 hid.o: rawhid/$(hid_target)
 	cc $(CFLAGS) -c $< -o $@
 

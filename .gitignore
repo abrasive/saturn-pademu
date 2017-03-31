@@ -4,6 +4,8 @@
 /client/client
 /client/client.dSYM
 /client/keymap.cpp
+/client/twinsticks
+/client/twinsticks.dSYM
 
 # pademu
 /pademu/build
