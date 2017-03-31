@@ -16,7 +16,7 @@ void Input::handle_event(SDL_Event *event) {
     InputGamepad::handle_event(event);
 }
 
-std::multimap<SDL_Keycode, DigitalControl*> InputKeyboard::mapping = {};
+std::multimap<SDL_Keycode, Control*> InputKeyboard::mapping = {};
 
 void InputKeyboard::handle_event(SDL_Event *event) {
     if (event->type != SDL_KEYDOWN &&
@@ -47,7 +47,7 @@ bool InputKeyboard::add_mapping(const char *inspec, Control *ctl) {
         return false;
     }
 
-    mapping.insert(std::make_pair(code, static_cast<DigitalControl*>(ctl)));
+    mapping.insert(std::make_pair(code, ctl));
 
     std::cerr << "mapped key " << inspec << std::endl;
 
@@ -80,8 +80,7 @@ void InputGamepad::handle_button_event(SDL_ControllerButtonEvent event) {
         if (id != event.which)
             return;
 
-        DigitalControl* ctl = static_cast<DigitalControl*>(it->second.second);
-        ctl->set(pressed);
+        it->second.second->set(pressed);
     }
 }
 
@@ -91,12 +90,11 @@ void InputGamepad::handle_axis_event(SDL_ControllerAxisEvent event) {
     auto its = axismapping.equal_range(axis);
     for (auto it = its.first; it != its.second; ++it) {
         SDL_JoystickID id = it->second.first;
-        AnalogControl* ctl = static_cast<AnalogControl*>(it->second.second);
 
         if (id != event.which)
             return;
 
-        ctl->set(event.value);
+        it->second.second->set(event.value);
     }
 }
 

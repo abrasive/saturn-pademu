@@ -199,13 +199,13 @@ void Mouse::sdl_event(SDL_Event *event) {
         bool pressed = event->button.state == SDL_PRESSED;
         switch (event->button.button) {
             case SDL_BUTTON_LEFT:
-                static_cast<DigitalControl*>(get_control("Left"))->set(pressed);
+                get_control("Left")->set(pressed);
                 break;
             case SDL_BUTTON_MIDDLE:
-                static_cast<DigitalControl*>(get_control("Middle"))->set(pressed);
+                get_control("Middle")->set(pressed);
                 break;
             case SDL_BUTTON_RIGHT:
-                static_cast<DigitalControl*>(get_control("Right"))->set(pressed);
+                get_control("Right")->set(pressed);
                 break;
         }
     }

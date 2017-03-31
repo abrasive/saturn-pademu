@@ -8,7 +8,7 @@ public:
 };
 
 class InputKeyboard : public Input {
-    static std::multimap<SDL_Keycode, DigitalControl*> mapping;
+    static std::multimap<SDL_Keycode, Control*> mapping;
 public:
     static bool add_mapping(const char *inspec, Control *ctl);
     static void handle_event(SDL_Event *event);

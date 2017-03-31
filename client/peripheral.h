@@ -21,6 +21,9 @@ public:
     const char *name;
 
     const enum ControlType type;
+
+    virtual void set(bool value) = 0;
+    virtual void set(int16_t value) = 0;
 };
 
 class DigitalControl : public Control {
@@ -46,6 +49,14 @@ public:
         else
             *target &= ~mask;
     }
+
+    // map analog values (eg. triggers) to digital with hysteresis
+    void set(int16_t value) {
+        if (value > 0x9000)
+            set(true);
+        if (value < 0x5600)
+            set(false);
+    }
 };
 
 class AnalogControl : public Control {
@@ -69,6 +80,13 @@ public:
             scaled = ((int)value + 32768) / 256;
         }
         *target = scaled;
+    }
+
+    void set(bool value) {
+        if (value)
+            set((int16_t)INT16_MAX);
+        else
+            set((int16_t)INT16_MIN);
     }
 };
 
