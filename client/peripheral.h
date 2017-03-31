@@ -55,8 +55,8 @@ class AnalogControl : public Control {
 public:
     AnalogControl(const char *name, bool onesided, uint8_t *report, int byte)
         : Control(name, Analog),
-          onesided(onesided),
-          target(&report[byte])
+          target(&report[byte]),
+          onesided(onesided)
     {}
 
     void set(int16_t value) {
