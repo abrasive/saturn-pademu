@@ -121,26 +121,11 @@ void Keyboard::sdl_event(SDL_Event *event) {
 
     bool pressed = event->key.state == SDL_PRESSED;
 
-    static uint8_t test_scancode = 0;
-    if (pressed && event->key.keysym.sym == SDL_GetKeyFromName("PageUp")) {
-        test_scancode++;
-        printf("Scan: %02X\n", test_scancode);
-    }
-    if (pressed && event->key.keysym.sym == SDL_GetKeyFromName("PageDown")) {
-        test_scancode--;
-        printf("Scan: %02X\n", test_scancode);
-    }
-
     auto it = scancode_map.find(event->key.keysym.sym);
     if (it == scancode_map.end())
         return;
 
-
     scancode = it->second;
-
-    if (event->key.keysym.sym == SDL_GetKeyFromName("X"))
-        scancode = test_scancode;
-
 
     if (pressed)
         pending = 8;    // MAKE
