@@ -1,6 +1,6 @@
 LIBS=`sdl2-config --libs`
 CFLAGS=`sdl2-config --cflags` -g -O2
-CXXFLAGS=$(CFLAGS) -std=c++11
+CXXFLAGS=$(CFLAGS) -std=c++11 -Wall
 
 OS := $(shell uname -s)
 
