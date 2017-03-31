@@ -50,11 +50,10 @@ public:
             *target &= ~mask;
     }
 
-    // map analog values (eg. triggers) to digital with hysteresis
     void set(int16_t value) {
-        if (value > 0x9000)
+        if (value > 0)
             set(true);
-        if (value < 0x5600)
+        else if (value < 0)
             set(false);
     }
 };

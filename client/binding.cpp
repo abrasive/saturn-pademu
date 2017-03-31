@@ -55,7 +55,7 @@ bool InputKeyboard::add_mapping(const char *inspec, Control *ctl) {
 }
 
 std::multimap<SDL_GameControllerButton, std::pair<SDL_JoystickID, Control*>> InputGamepad::mapping = {};
-std::multimap<SDL_GameControllerAxis, std::pair<SDL_JoystickID, Control*>> InputGamepad::axismapping = {};
+std::multimap<SDL_GameControllerAxis, struct JoyAxisMapping> InputGamepad::axismapping = {};
 
 void InputGamepad::handle_event(SDL_Event *event) {
     if (event->type == SDL_CONTROLLERBUTTONDOWN ||
@@ -89,12 +89,25 @@ void InputGamepad::handle_axis_event(SDL_ControllerAxisEvent event) {
 
     auto its = axismapping.equal_range(axis);
     for (auto it = its.first; it != its.second; ++it) {
-        SDL_JoystickID id = it->second.first;
+        struct JoyAxisMapping &jam = it->second;
 
-        if (id != event.which)
+        if (jam.joy != event.which)
             return;
 
-        it->second.second->set(event.value);
+        int16_t value;
+        if (jam.sign > 0)
+            value = event.value;
+        else
+            value = -event.value - 1;
+
+        if (jam.ctl->type == Analog) {
+            jam.ctl->set(value);
+        } else {
+            if (value > jam.hyst_on)
+                jam.ctl->set(true);
+            if (value < jam.hyst_off)
+                jam.ctl->set(false);
+        }
     }
 }
 
@@ -106,8 +119,16 @@ bool InputGamepad::add_mapping(SDL_GameControllerButton inspec, SDL_JoystickID i
     return true;
 }
 
-bool InputGamepad::add_axis_mapping(SDL_GameControllerAxis inspec, SDL_JoystickID id, Control *ctl) {
-    axismapping.insert(std::make_pair(inspec, std::make_pair(id, ctl)));
+bool InputGamepad::add_axis_mapping(SDL_GameControllerAxis inspec, SDL_JoystickID id, Control *ctl,
+                                    int sign, int hyst_on, int hyst_off) {
+    JoyAxisMapping jam;
+    jam.joy = id;
+    jam.ctl = ctl;
+    jam.sign = sign;
+    jam.hyst_on = hyst_on;
+    jam.hyst_off = hyst_off;
+
+    axismapping.insert(std::make_pair(inspec, jam));
 
     std::cerr << "mapped axis " << SDL_GameControllerGetStringForAxis((SDL_GameControllerAxis)inspec) << std::endl;
 
