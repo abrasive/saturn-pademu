@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
     }
 
     SDL_GameController *pad = SDL_GameControllerOpen(0);
+    if (!pad)
+        sdl_die("Couldn't open controller 0");
     SDL_JoystickID ctl = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(pad));
     Peripheral *p1 = new TwinStick();
     InputGamepad::add_axis_mapping(SDL_CONTROLLER_AXIS_LEFTX, ctl,
